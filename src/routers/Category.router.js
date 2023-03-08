@@ -4,6 +4,12 @@ const validationToken = require('../middleware/validationToken');
 
 const router = express.Router();
 
+router.get(
+  '/',
+  validationToken,
+  CategoryController.getAllCategory,
+);
+
 router.post(
   '/',
   validationToken,
