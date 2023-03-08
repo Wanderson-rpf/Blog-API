@@ -1,5 +1,14 @@
 const { UserService } = require('../services');
 
+const getAllUser = async (_req, res) => {
+  try {
+    const { type, message } = await UserService.getAllUser();
+  return res.status(type).json(message);
+  } catch (error) {
+    return res.status(500).json({ message: 'Erro interno', error: error.message });
+  }
+};
+
 const createUser = async (req, res) => {
   try {
     const hasEmail = await UserService.getByUserEmail(req.body.email);
@@ -13,5 +22,6 @@ const createUser = async (req, res) => {
 };
 
 module.exports = {
+  getAllUser,
   createUser,
 };
