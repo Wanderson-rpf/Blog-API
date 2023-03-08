@@ -3,7 +3,7 @@ const { tokenGenerate } = require('../utils/tokenGenerate');
 
 const isBodyValid = (email, pwd) => email && pwd;
 
-const validateLogin = async (req, res) => {
+module.exports = async (req, res) => {
   try {
     const { email, password } = req.body;
     if (!isBodyValid(email, password)) {
@@ -24,5 +24,3 @@ const validateLogin = async (req, res) => {
     return res.status(500).json({ message: 'Erro interno', error: error.message });
   }
 };
-
-module.exports = { validateLogin };
