@@ -3,6 +3,7 @@
  * @param {import('sequelize').DataTypes} DataTypes
  */
 
+// Model (tabela) para relacionamento.
 module.exports = (sequelize, DataTypes) => {
   const PostCategory = sequelize.define('PostCategory', {
       postId: {
@@ -25,16 +26,21 @@ module.exports = (sequelize, DataTypes) => {
     { 
       timestamps: false, 
       underscored: true,
+      tableName: 'posts_categories',
     }
   );
-  PostCategory.associate = (models) => {
-    models.Category.belongsToMany(models.BlogPost, {
-      through: PostCategory,
+  PostCategory.associate = ({ Category, BlogPost}) => {
+    Category.belongsToMany(BlogPost, {
       foreignKey: 'categoryId',
-    });
-    models.BlogPost.belongsToMany(models.Category, {
+      otherKey: 'postId',
       through: PostCategory,
+      as: 'categoryId',
+    });
+    BlogPost.belongsToMany(Category, {
       foreignKey: 'postId',
+      otherKey: 'categoryId',
+      through: PostCategory,
+      as: 'postId',
     });
   };
   return PostCategory;
