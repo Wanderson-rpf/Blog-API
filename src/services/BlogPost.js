@@ -1,7 +1,9 @@
 const { BlogPost, User, Category } = require('../models');
+const { getAllCategory } = require('./Category');
 const { createCategoryPost } = require('./PostCategory');
 const newPostValidate = require('./validations/newPostValidate');
 const postCategoryIdValidate = require('./validations/postCategoryIdValidate');
+const postIdValidate = require('./validations/postIdValidate');
 
 const getAllPosts = async () => {
   const allPosts = await BlogPost.findAll({
@@ -20,11 +22,35 @@ const getAllPosts = async () => {
   return { type: 200, message: allPosts };
 };
 
+const getByIdPosts = async (id) => {
+  const listAllPosts = await getAllPosts();
+
+  const errorId = await postIdValidate([Number(id)], listAllPosts);
+  if (errorId) return { type: errorId.type, message: errorId.message };
+
+  const [post] = await BlogPost.findAll({
+    where: { id },
+    include: [
+      { model: User, 
+        as: 'user', 
+        attributes: { exclude: ['password'] },
+      },
+      { model: Category,
+        as: 'categories',
+        attributes: { exclude: ['PostCategory'] },
+      },
+    ],
+  });
+
+  return { type: 200, message: post };
+};
+
 const createBlogPost = async (newPost, userId) => {
   const error = newPostValidate(newPost);
   if (error) return { type: error.type, message: error.message };
   
-  const errorId = await postCategoryIdValidate(newPost.categoryIds);
+  const listAllCategory = await getAllCategory();
+  const errorId = await postCategoryIdValidate(newPost.categoryIds, listAllCategory);
   if (errorId) return { type: errorId.type, message: errorId.message };
   
   const newBlogPost = {
@@ -42,5 +68,6 @@ const createBlogPost = async (newPost, userId) => {
 
 module.exports = {
   getAllPosts,
+  getByIdPosts,
   createBlogPost,
 };

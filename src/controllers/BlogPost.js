@@ -10,6 +10,17 @@ const getAllPosts = async (_req, res) => {
   }
 };
 
+const getByIdPosts = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { type, message } = await BlogPostService.getByIdPosts(id);
+
+    return res.status(type).json(message);
+  } catch (error) {
+    return res.status(500).json({ message: 'Erro interno', error: error.message });
+  }
+};
+
 const createBlogPost = async (req, res) => {
   try {
     const idUser = req.dataUser.payload.id;
@@ -23,5 +34,6 @@ const createBlogPost = async (req, res) => {
 
 module.exports = {
   getAllPosts,
+  getByIdPosts,
   createBlogPost,
 };

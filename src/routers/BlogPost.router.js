@@ -10,6 +10,12 @@ router.get(
   BlogPostController.getAllPosts,
 );
 
+router.get(
+  '/:id',
+  validationToken,
+  BlogPostController.getByIdPosts,
+);
+
 router.post(
   '/',
   validationToken,

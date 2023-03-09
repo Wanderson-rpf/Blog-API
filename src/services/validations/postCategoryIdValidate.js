@@ -1,7 +1,7 @@
-const generateListIdCategories = require('../../utils/generateListIdCategories');
+const generateListId = require('../../utils/generateListId');
 
-module.exports = async (arrayOfIdsForValidate) => {
-  const listIdAllCategories = await generateListIdCategories();
+module.exports = async (arrayOfIdsForValidate, allPosts) => {
+  const listIdAllCategories = await generateListId(allPosts);
 
   for (let i = 0; i < arrayOfIdsForValidate.length; i += 1) {
     if (!listIdAllCategories.includes(arrayOfIdsForValidate[i])) {
