@@ -34,8 +34,20 @@ const createUser = async (req, res) => {
   }
 };
 
+const deleteUser = async (req, res) => {
+  try {
+    const idUserLogged = req.dataUser.payload.id;
+    const { type, message } = await UserService.deleteUser(idUserLogged);
+  
+    return res.status(type).json(message);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   getAllUser,
   getById,
   createUser,
+  deleteUser,
 };

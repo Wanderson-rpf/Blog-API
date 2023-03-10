@@ -80,10 +80,6 @@ const updateBlogPost = async (newDataPost, id) => {
 };
 
 const deleteBlogPost = async (id) => {
-  // const listAllPosts = await getAllPosts();
-  // const errorId = await postIdValidate([Number(id)], listAllPosts);
-  // if (errorId) return { type: errorId.type, message: errorId.message };
-
   await BlogPost.destroy({ 
     where: { id },
   });

@@ -5,18 +5,26 @@ const validationToken = require('../middleware/validationToken');
 const router = express.Router();
 
 router.get(
-  '/', validationToken,
+  '/', 
+  validationToken,
   UserController.getAllUser,
 );
 
 router.get(
-  '/:id', validationToken,
+  '/:id', 
+  validationToken,
   UserController.getById,
 );
 
 router.post(
   '/', 
   UserController.createUser,
+);
+
+router.delete(
+  '/me',
+  validationToken,
+  UserController.deleteUser,
 );
 
 module.exports = router;

@@ -44,9 +44,17 @@ const createUser = async (newUserData) => {
   return { type: 201, message: { token } };
 };
 
+const deleteUser = async (id) => {
+  await User.destroy({ 
+    where: { id },
+  });
+  return { type: 204, message: '' };
+};
+
 module.exports = {
   getByUserEmail,
   getAllUser,
   getById,
   createUser,
+  deleteUser,
 };
