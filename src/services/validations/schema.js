@@ -16,7 +16,17 @@ const newPostDataSchema = Joi.object({
   .messages({ 'string.empty': 'one or more "categoryIds" not found' }),
 });
 
+const editPostDataSchema = Joi.object({
+  title: Joi.string()
+    .required()
+    .messages({ 'string.empty': 'Some required fields are missing' }),
+  content: Joi.string()
+    .required()
+    .messages({ 'string.empty': 'Some required fields are missing' }),
+});
+
 module.exports = {
   newUserDataSchema,
   newPostDataSchema,
+  editPostDataSchema,
 };

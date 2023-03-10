@@ -32,8 +32,22 @@ const createBlogPost = async (req, res) => {
   }
 };
 
+const updateBlogPost = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const newDataPost = req.body;
+    console.log('Controller:', newDataPost);
+    const { type, message } = await BlogPostService.updateBlogPost(newDataPost, id);
+  
+    return res.status(type).json(message);
+  } catch (error) {
+    return res.status(500).json({ message: 'Erro interno', error: error.message });
+  }
+};
+
 module.exports = {
   getAllPosts,
   getByIdPosts,
   createBlogPost,
+  updateBlogPost,
 };

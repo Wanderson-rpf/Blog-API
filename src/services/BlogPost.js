@@ -1,6 +1,7 @@
 const { BlogPost, User, Category } = require('../models');
 const { getAllCategory } = require('./Category');
 const { createCategoryPost } = require('./PostCategory');
+const editPostValidate = require('./validations/editPostValidate');
 const newPostValidate = require('./validations/newPostValidate');
 const postCategoryIdValidate = require('./validations/postCategoryIdValidate');
 const postIdValidate = require('./validations/postIdValidate');
@@ -66,8 +67,21 @@ const createBlogPost = async (newPost, userId) => {
   return { type: 201, message: postCreated };
 };
 
+const updateBlogPost = async (newDataPost, id) => {
+  const error = editPostValidate(newDataPost);
+  if (error) return { type: error.type, message: error.message };
+  
+  await BlogPost.update(newDataPost, {
+    where: { id },
+  });
+
+  const newPost = await getByIdPosts(id);
+  return { type: 200, message: newPost.message };
+};
+
 module.exports = {
   getAllPosts,
   getByIdPosts,
   createBlogPost,
+  updateBlogPost,
 };
