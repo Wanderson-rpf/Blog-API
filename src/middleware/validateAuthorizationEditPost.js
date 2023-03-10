@@ -1,8 +1,13 @@
-module.exports = async (req, res, next) => {
-  const { id: authorPost } = req.dataUser.payload;
-  const { id } = req.params;
+const { BlogPostService } = require('../services');
 
-  if (Number(authorPost) !== Number(id)) {
+module.exports = async (req, res, next) => {
+  const { id: postId } = req.params;
+  const { id: authorPost } = req.dataUser.payload;
+
+  const post = await BlogPostService.getByIdPosts(postId);
+  const userLogged = post.message.userId;
+
+  if (Number(authorPost) !== Number(userLogged)) {
     return res.status(401).json({ message: 'Unauthorized user' });
   }
 

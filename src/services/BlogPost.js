@@ -70,7 +70,7 @@ const createBlogPost = async (newPost, userId) => {
 const updateBlogPost = async (newDataPost, id) => {
   const error = editPostValidate(newDataPost);
   if (error) return { type: error.type, message: error.message };
-  
+
   await BlogPost.update(newDataPost, {
     where: { id },
   });
@@ -79,9 +79,21 @@ const updateBlogPost = async (newDataPost, id) => {
   return { type: 200, message: newPost.message };
 };
 
+const deleteBlogPost = async (id) => {
+  // const listAllPosts = await getAllPosts();
+  // const errorId = await postIdValidate([Number(id)], listAllPosts);
+  // if (errorId) return { type: errorId.type, message: errorId.message };
+
+  await BlogPost.destroy({ 
+    where: { id },
+  });
+  return { type: 204, message: '' };
+};
+
 module.exports = {
   getAllPosts,
   getByIdPosts,
   createBlogPost,
   updateBlogPost,
+  deleteBlogPost,
 };

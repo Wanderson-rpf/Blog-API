@@ -6,7 +6,7 @@ const getAllPosts = async (_req, res) => {
 
     return res.status(type).json(message);
   } catch (error) {
-    return res.status(500).json({ message: 'Erro interno', error: error.message });
+    return res.status(500).json({ message: error.message });
   }
 };
 
@@ -17,7 +17,7 @@ const getByIdPosts = async (req, res) => {
 
     return res.status(type).json(message);
   } catch (error) {
-    return res.status(500).json({ message: 'Erro interno', error: error.message });
+    return res.status(500).json({ message: error.message });
   }
 };
 
@@ -28,7 +28,7 @@ const createBlogPost = async (req, res) => {
   
     return res.status(type).json(message);
   } catch (error) {
-    return res.status(500).json({ message: 'Erro interno', error: error.message });
+    return res.status(500).json({ message: error.message });
   }
 };
 
@@ -36,12 +36,22 @@ const updateBlogPost = async (req, res) => {
   try {
     const { id } = req.params;
     const newDataPost = req.body;
-    console.log('Controller:', newDataPost);
     const { type, message } = await BlogPostService.updateBlogPost(newDataPost, id);
   
     return res.status(type).json(message);
   } catch (error) {
-    return res.status(500).json({ message: 'Erro interno', error: error.message });
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+const deleteBlogPost = async (req, res) => {
+  try {
+    const { id: postId } = req.params;
+    const { type, message } = await BlogPostService.deleteBlogPost(postId);
+  
+    return res.status(type).json(message);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
   }
 };
 
@@ -50,4 +60,5 @@ module.exports = {
   getByIdPosts,
   createBlogPost,
   updateBlogPost,
+  deleteBlogPost,
 };
