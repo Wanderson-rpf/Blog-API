@@ -7,9 +7,9 @@ const validationToken = require('../middleware/validationToken');
 const router = express.Router();
 
 router.get(
-  '/',
+  '/search',
   validationToken,
-  BlogPostController.getAllPosts,
+  BlogPostController.searchBlogPost,
 );
 
 router.get(
@@ -18,12 +18,6 @@ router.get(
   BlogPostController.getByIdPosts,
 );
 
-router.post(
-  '/',
-  validationToken,
-  BlogPostController.createBlogPost,
-  );
-  
 router.put(
   '/:id',
   validationToken,
@@ -38,4 +32,16 @@ router.delete(
   validateAuthorizationEditPost,
   BlogPostController.deleteBlogPost,
 );
+
+router.get(
+  '/',
+  validationToken,
+  BlogPostController.getAllPosts,
+);
+
+router.post(
+  '/',
+  validationToken,
+  BlogPostController.createBlogPost,
+  );
 module.exports = router;

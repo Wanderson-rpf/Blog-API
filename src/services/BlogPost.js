@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const { BlogPost, User, Category } = require('../models');
 const { getAllCategory } = require('./Category');
 const { createCategoryPost } = require('./PostCategory');
@@ -74,7 +75,6 @@ const updateBlogPost = async (newDataPost, id) => {
   await BlogPost.update(newDataPost, {
     where: { id },
   });
-
   const newPost = await getByIdPosts(id);
   return { type: 200, message: newPost.message };
 };
@@ -86,10 +86,32 @@ const deleteBlogPost = async (id) => {
   return { type: 204, message: '' };
 };
 
+const searchBlogPost = async (dataSearch) => {
+  const post = await BlogPost.findAll({
+    where: { [Op.or]: [
+        { title: { [Op.like]: `%${dataSearch}%` } },
+        { content: { [Op.like]: `%${dataSearch}%` } },
+      ],
+    },
+    include: [
+      { model: User, 
+        as: 'user', 
+        attributes: { exclude: ['password'] }, 
+      },
+      { model: Category,
+        as: 'categories',
+        attributes: { exclude: ['PostCategory'] },
+      },
+    ],
+  });
+  return { type: 200, message: post };
+};
+
 module.exports = {
   getAllPosts,
   getByIdPosts,
   createBlogPost,
   updateBlogPost,
   deleteBlogPost,
+  searchBlogPost,
 };
