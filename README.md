@@ -630,7 +630,12 @@ Para este é necessário ter o docker instalado.
   docker exec -it blogs_api bash 
 ```
 
-4. No terminal do container rode o comando de start para ambiente de produção ou debug para ambiente de desenvolvimento.
+4. No terminal do container rode o comando para instalação das dependências.
+```bash
+  npm install
+```
+
+5. No terminal do container rode o comando de start para ambiente de produção ou debug para ambiente de desenvolvimento.
 
 ```bash
   npm run start
@@ -641,9 +646,5 @@ Para este é necessário ter o docker instalado.
 
 ---
 
-
-
-
-    
 ## :man_technologist: Feito por
 [Wanderson Ricardo](https://www.linkedin.com/in/wanderson-ricardo-dev/)
