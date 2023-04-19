@@ -610,7 +610,7 @@ Em caso de inexistente (status 200):
 ---
 
 
-## Instalação/visualização
+## :wrench: Instalação/visualização
 
 1. Clonar o repositório
 
